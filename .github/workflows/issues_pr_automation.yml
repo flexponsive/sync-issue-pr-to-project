@@ -3,12 +3,12 @@ on:
   issues:
     types:
       - opened
-      - closed
+#      - closed
       - reopened
   pull_request:
     types:
       - opened
-      - closed
+#      - closed
       - reopened
       - review_requested
       - ready_for_review
@@ -24,27 +24,27 @@ jobs:
       - name: (Re-)Opened Issue has Status In Discussion
         if: github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened')
         run: |
-          echo "NEW_STATUS='In Discussion'" >> $GITHUB_ENV
+          echo "NEW_STATUS=In Discussion" >> $GITHUB_ENV
 
       - name: Closed Issue has Status Done
         if: github.event_name == 'issues' && github.event.action == 'closed'
         run: |
-          echo "NEW_STATUS='Done'" >> $GITHUB_ENV
+          echo "NEW_STATUS=Done" >> $GITHUB_ENV
 
       - name: (Re-)Opened Pull has Status In Progress
         if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
         run: |
-          echo "NEW_STATUS='In Progress'" >> $GITHUB_ENV
+          echo "NEW_STATUS=In Progress" >> $GITHUB_ENV
 
       - name: Review Requested/Ready for Review Pull Request has Status Review
         if: github.event_name == 'pull_request' && (github.event.action == 'review_requested' || github.event.action == 'ready_for_review')
         run: |
-          echo "NEW_STATUS='Review'" >> $GITHUB_ENV
+          echo "NEW_STATUS=Review" >> $GITHUB_ENV
 
       - name: Closed PR has Status Done
         if: github.event_name == 'pull_request' && github.event.action == 'closed'
         run: |
-          echo "NEW_STATUS='Done'" >> $GITHUB_ENV
+          echo "NEW_STATUS=Done" >> $GITHUB_ENV
 
       - uses: flexponsive/set-issue-project-status@main
         with:
