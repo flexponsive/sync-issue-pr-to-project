@@ -1,13 +1,22 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: Set Issue Status on Project Board
+description: Moves an issue or pull request into a specific status column on a project board, adding the issue to the board if necessary. This action uses the new ProjectV2 API.
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  project-url:
     required: true
-    default: 'World'
+    description: URL of the project to add issues to
+  github-token:
+    description: Personal Access Token with projects scope
+    required: true
+  new-status:
+    description: New status, e.g. "In Development"
+    required: true
+  add-to-top-of-column:
+    description: Moves the card for this issue to the top of this column
+    required: true
+    default: "false"
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  card-node-id: # id of output
+    description: Node ID of the card created or updated
 runs:
   using: 'node16'
   main: 'index.js'
