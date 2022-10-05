@@ -42,5 +42,5 @@ jobs:
         with:
           project-url: https://github.com/users/flexponsive/projects/3
           github-token: ${{ secrets.PROJECT_TOKEN }}
-          new-status: "In Progress"
+          new-status: ${{ env.NEW_STATUS }}
           add-to-top-of-column: true
