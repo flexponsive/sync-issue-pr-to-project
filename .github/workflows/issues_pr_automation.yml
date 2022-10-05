@@ -4,9 +4,12 @@ on:
     types:
       - opened
       - closed
+      - reopened
   pull_request:
     types:
       - opened
+      - closed
+      - reopened
       - review_requested
       - ready_for_review
 
@@ -17,6 +20,23 @@ jobs:
     steps:
       - name: Dump context
         uses: crazy-max/ghaction-dump-context@v1
+
+      - name: (Re-)Opened Issue has Status In Discussion
+        if: github.event_name == 'issues' && (github.event.action == 'opened' || github.event.action == 'reopened')
+        run: |
+          echo "NEW_STATUS='In Discussion'" >> $GITHUB_ENV
+
+      - name: Closed Issue has Status Done
+        if: github.event_name == 'issues' && github.event.action == 'closed'
+        run: |
+          echo "NEW_STATUS='Done'" >> $GITHUB_ENV
+
+      - name: (Re-)Opened Pull has Status In Progress
+        if: github.event_name == 'pull_request' && (github.event.action == 'opened' || github.event.action == 'reopened')
+        run: |
+          echo "NEW_STATUS='In Progress'" >> $GITHUB_ENV
+
+      # todo review PRs, closed PRs
 
       - uses: flexponsive/set-issue-project-status@main
         with:
