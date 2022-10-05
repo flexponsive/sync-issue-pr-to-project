@@ -6,7 +6,7 @@ const githubToken = core.getInput("github-token");
 
 const inputs = {
 	projectUrl: core.getInput("project-url"),
-	newStatusName: core.getInput("new-status-value"),
+	newStatusName: core.getInput("new-status"),
 	addToTopOfColumn: ["true", "1", "yes"].includes(
 		core.getInput("add-to-top-of-column")
 	),
