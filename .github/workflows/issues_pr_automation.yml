@@ -48,7 +48,7 @@ jobs:
 
       - uses: flexponsive/set-issue-project-status@main
         with:
-          project-url: https://github.com/users/flexponsive/projects/3
+          project-url: https://github.com/users/flexponsive/projects/4
           github-token: ${{ secrets.PROJECT_TOKEN }}
           new-status: ${{ env.NEW_STATUS }}
           add-to-top-of-column: true
