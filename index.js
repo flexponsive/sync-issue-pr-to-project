@@ -48,7 +48,7 @@ async function main() {
     // STEP 2A: If required, delete any existing card from the project (before re-adding it, see https://github.com/actions/add-to-project/issues/89#issuecomment-1233952145)
 	if (inputs.replace) {
         try {
-            const issueCard = getIssueCardOnProject(octokitGraphql, projectDetails.projectNodeId, inputs.issueNodeId);
+            const issueCard = await getIssueCardOnProject(octokitGraphql, projectDetails.projectNodeId, inputs.issueNodeId);
             console.log('ISSUE CARD', issueCard);
             const deleteOldCard = await octokitGraphql(
                 `mutation {
@@ -207,3 +207,41 @@ async function getProjectDetails(octokitGraphql, projectBoardLink) {
 	return projectInfo;
 }
 
+
+async function getIssueCardOnProject(octokitGraphql, projectNodeId, issueNodeId) {
+    const allProjectIssueCards = await octokitGraphql(`
+        query getProjectCards($projectNodeId: ID!) {
+            node(id: $projectNodeId) {
+            ... on ProjectV2 {
+                items(first: 100) {
+                nodes {
+                    id
+                    content {
+                    ... on Issue {
+                        id
+                        number
+                        title
+                    }
+                    ... on PullRequest {
+                        id
+                        number
+                        title
+                    }
+                    }
+                }
+                }
+            }
+            }
+        }
+        `,
+        {
+            projectNodeId: projectNodeId,
+        });
+        
+    const matchingCards = (allProjectIssueCards.node?.items?.nodes ?? []).filter(node => node.content.id == issueNodeId);
+    if (matchingCards.length == 1) {
+        return matchingCards[0];
+    } else {
+        throw new Error("could not find issue card or not unique?");
+    }
+}

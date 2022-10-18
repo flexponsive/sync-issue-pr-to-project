@@ -52,3 +52,4 @@ jobs:
           github-token: ${{ secrets.PROJECT_TOKEN }}
           new-status: ${{ env.NEW_STATUS }}
           add-to-top-of-column: true
+          replace: true
