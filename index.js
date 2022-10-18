@@ -13,6 +13,7 @@ const inputs = {
 	issueNodeId: (
 		github.context.payload.issue ?? github.context.payload.pull_request
 	).node_id,
+    replace: ["true", "1", "yes"].includes(core.getInput("replace")),
 };
 
 core.debug(`INPUTS ${JSON.stringify(inputs)}`);
@@ -44,7 +45,30 @@ async function main() {
 		);
 	}
 
-	// STEP 2: Add our Issue/PR to that project board.
+    // STEP 2A: If required, delete any existing card from the project (before re-adding it, see https://github.com/actions/add-to-project/issues/89#issuecomment-1233952145)
+	if (inputs.replace) {
+        try {
+            const issueCard = getIssueCardOnProject(octokitGraphql, projectDetails.projectNodeId, inputs.issueNodeId);
+            console.log('ISSUE CARD', issueCard);
+            const deleteOldCard = await octokitGraphql(
+                `mutation {
+                    deleteProjectV2Item(
+                      input: {
+                        projectId: "${projectDetails.projectNodeId}"
+                        itemId: "${issueCard.id}"
+                      }
+                    ) {
+                      deletedItemId
+                    }
+                  }`
+            );
+            console.log('DELETE OLD CARD', deleteOldCard);
+        } catch (e) {
+            console.log('could not delete old project card', e);
+        }
+    }
+
+    // STEP 2B: Add our Issue/PR to that project board.
 	const addIssueToProject = await octokitGraphql(
 		`mutation addIssueToProject($input: AddProjectV2ItemByIdInput!) {
 			addProjectV2ItemById(input: $input) {
@@ -182,3 +206,4 @@ async function getProjectDetails(octokitGraphql, projectBoardLink) {
 	core.debug(`GETPROJECTDETAILS ${JSON.stringify(projectInfo)}`);
 	return projectInfo;
 }
+
