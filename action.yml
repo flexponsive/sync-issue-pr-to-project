@@ -15,7 +15,7 @@ inputs:
     required: true
     default: "false"
   replace:
-    description: Try to delete any existing card for the issue/PR before updating
+    description: Try to delete any existing card for the issue/PR before creating a new one
     required: false
     default: "false"
 outputs:

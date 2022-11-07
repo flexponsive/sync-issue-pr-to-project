@@ -1,0 +1,19 @@
+name: When PR review is requested, set project status to Review
+on:
+  pull_request:
+    types:
+      - review_requested
+      - ready_for_review
+
+jobs:
+  project-set-pr-review:
+    name: Set PR Review Status on Project Board
+    runs-on: ubuntu-latest
+    steps:
+      - uses: flexponsive/set-issue-project-status@main
+        with:
+          project-url: https://github.com/users/flexponsive/projects/4
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          new-status: "Review"
+          add-to-top-of-column: true
+          replace: true
