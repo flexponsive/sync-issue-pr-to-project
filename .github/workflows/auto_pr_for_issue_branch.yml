@@ -1,0 +1,29 @@
+# When an issue branch is created, then automatically convert the issue to
+# a draft pull request
+#
+# In order to create a pull request, we must first initialize the branch with
+# a single (empty) commit
+#
+name: "Auto PR for Issue Branch"
+on: [create]
+
+jobs:
+  auto_pr_for_issue_branch:
+    # if branch name ^[1-9], then we assume it's an issue branch
+    if: github.event.ref_type == 'branch' && (startsWith(github.event.ref, '1') || startsWith(github.event.ref, '2') || startsWith(github.event.ref, '3') || startsWith(github.event.ref, '4') || startsWith(github.event.ref, '5') || startsWith(github.event.ref, '6') || startsWith(github.event.ref, '7') || startsWith(github.event.ref, '8') || startsWith(github.event.ref, '9'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Initialize branch with empty commit
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git commit --allow-empty -m "init pull request"
+          git push
+          export ISSUENO=`[[ "$GITHUB_REF_NAME" =~ ^([0-9]+)- ]] && echo "${BASH_REMATCH[1]}"`
+          echo ISSUENO=$ISSUENO
+          hub pull-request -b main -i $ISSUENO
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
