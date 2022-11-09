@@ -4,7 +4,7 @@ This action synchronizeses the status of issues and pull requests to a Github pr
 
 For example:
 
-- When an issue is created, add it to the Github project board with status "Inbox"
+- When an issue is created, add it to the Github project board with status "Inbox" at the top of the column
 
 - When a pull request is created, create a Github project card with status "In Development"
 
@@ -59,3 +59,4 @@ The inputs are defined in [`action.yml`](action.yml):
 
 - [austenstone/project-update](https://github.com/austenstone/project-update) can set arbitrary fields on project cards but uses the deprecated ProjectNext API and probably will not work any more.
 
+- [alex-page/github-project-automation-plus](https://github.com/alex-page/github-project-automation-plus), [leonsteinhaeuser/project-beta-automations](https://github.com/leonsteinhaeuser/project-beta-automations)
