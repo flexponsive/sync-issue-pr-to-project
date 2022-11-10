@@ -21,7 +21,7 @@ Before starting to work on an issue, create an [issue branch](https://github.com
 *Custom Automation*:
 1. Using the [auto_pr_for_issue_branch.yml](.github/workflows/auto_pr_for_issue_branch.yml) action, make an empty commit to the issue branch. Then convert the issue to a (draft) pull request using the hub cli tool.
 
-2. Replace the existing project card for the issue with a new issue card for the pull request, and move this card to "In Development" on the project board, using the [flexponsive/set-issue-project-status](http://github.com/flexponsive/set-issue-project-status) Github action.
+2. Replace the existing project card for the issue with a new issue card for the pull request, and move this card to "In Development" on the project board, using the [flexponsive/sync-issue-pr-to-project](http://github.com/flexponsive/sync-issue-pr-to-project) Github action.
 
 **4. Request review of pull request**
 

@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "NEW_STATUS=Done" >> $GITHUB_ENV
 
-      - uses: flexponsive/set-issue-project-status@main
+      - uses: flexponsive/sync-issue-pr-to-project@main
         with:
           project-url: https://github.com/users/flexponsive/projects/4
           github-token: ${{ secrets.PROJECT_TOKEN }}

@@ -10,7 +10,7 @@ jobs:
     name: Set PR Review Status on Project Board
     runs-on: ubuntu-latest
     steps:
-      - uses: flexponsive/set-issue-project-status@main
+      - uses: flexponsive/sync-issue-pr-to-project@main
         with:
           project-url: https://github.com/users/flexponsive/projects/4
           github-token: ${{ secrets.PROJECT_TOKEN }}
