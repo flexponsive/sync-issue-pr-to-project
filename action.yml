@@ -18,6 +18,9 @@ inputs:
     description: Try to delete any existing card for the issue/PR before creating a new one
     required: false
     default: "false"
+  issue-node-id:
+    description: Issue Node ID (optional, by default taken from context)
+    required: false
 outputs:
   card-node-id: # id of output
     description: Node ID of the card created or updated

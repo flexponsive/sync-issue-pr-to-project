@@ -10,13 +10,11 @@ const inputs = {
 	addToTopOfColumn: ["true", "1", "yes"].includes(
 		core.getInput("add-to-top-of-column")
 	),
-	issueNodeId: (
-		github.context.payload.issue ?? github.context.payload.pull_request
-	).node_id,
+	issueNodeId: (github.context.payload.issue ?? github.context.payload.pull_request ?? {}).node_id ?? core.getInput("issue-node-id"),
 	replace: ["true", "1", "yes"].includes(core.getInput("replace")),
 };
 
-core.debug(`INPUTS ${JSON.stringify(inputs)}`);
+core.debug(`INPUTS: ${JSON.stringify(inputs)}`);
 
 const octokitGraphql = graphql.defaults({
 	headers: {

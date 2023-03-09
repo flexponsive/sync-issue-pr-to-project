@@ -1,0 +1,33 @@
+#
+#
+name: "E2E Test"
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: "30 7 * * 1"
+
+jobs:
+  move_card:
+    name: "Move card"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: flexponsive/sync-issue-pr-to-project@main
+        with:
+          project-url: https://github.com/users/flexponsive/projects/4
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          new-status: "In Progress"
+          add-to-top-of-column: true
+          replace: true
+          issue-node-id: "I_kwDOIIqnmM5TWiNN"
+
+  move_card_back:
+    name: "Move card back"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: flexponsive/sync-issue-pr-to-project@main
+        with:
+          project-url: https://github.com/users/flexponsive/projects/4
+          github-token: ${{ secrets.PROJECT_TOKEN }}
+          new-status: "Done"
+          add-to-top-of-column: false
+          issue-node-id: "I_kwDOIIqnmM5TWiNN"
