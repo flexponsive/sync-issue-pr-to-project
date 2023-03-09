@@ -1,5 +1,7 @@
 # Set Issue and Pull Request Status on Github Board
 
+[![E2E Test](https://github.com/flexponsive/sync-issue-pr-to-project/actions/workflows/e2e_test.yml/badge.svg)](https://github.com/flexponsive/sync-issue-pr-to-project/actions/workflows/e2e_test.yml)
+
 This action synchronizeses the status of issues and pull requests to a Github projects board. It can add issues and pull requests to projects, and set the status field of the project card corresponding to the issue or pull request.
 
 For example:
